@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rake'
+gem 'celluloid', '~> 0.17'
 
 group :development, :test do
   gem 'rspec', '~> 3.5'
