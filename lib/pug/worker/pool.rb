@@ -1,10 +1,11 @@
 module Pug
   module Worker
     class Pool
-      attr_reader :size
+      attr_reader :size, :instance_factory
 
-      def initialize(size)
+      def initialize(size, instance_factory)
         @size = size
+        @instance_factory = instance_factory
       end
 
       def start
@@ -26,7 +27,7 @@ module Pug
       end
 
       def spawn_instances
-        Array.new(size) { |instance_num| Instance.new instance_num }
+        Array.new(size) { |instance_num| instance_factory.create instance_num }
       end
     end
   end
