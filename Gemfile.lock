@@ -1,7 +1,10 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    amq-protocol (2.0.1)
     ast (2.3.0)
+    bunny (2.6.1)
+      amq-protocol (>= 2.0.1)
     byebug (9.0.6)
     celluloid (0.17.3)
       celluloid-essentials
@@ -72,6 +75,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bunny (~> 2.6)
   celluloid (~> 0.17)
   pry-byebug
   rake
