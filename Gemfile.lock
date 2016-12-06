@@ -26,6 +26,10 @@ GEM
     coderay (1.1.1)
     diff-lcs (1.2.5)
     docile (1.1.5)
+    docker-api (1.33.0)
+      excon (>= 0.38.0)
+      json
+    excon (0.54.0)
     hitimes (1.2.4)
     json (2.0.2)
     method_source (0.8.2)
@@ -77,6 +81,7 @@ PLATFORMS
 DEPENDENCIES
   bunny (~> 2.6)
   celluloid (~> 0.17)
+  docker-api (~> 1.33)
   pry-byebug
   rake
   rspec (~> 3.5)
