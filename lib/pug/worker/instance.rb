@@ -28,25 +28,16 @@ module Pug
 
       private
 
-      attr_reader :build_channel, :build_subscription
-
       def subscribe_builds
-        @build_channel = broker_connection.create_channel
-        queue = build_channel.queue build_queue_name, durable: true
-        @build_subscription = queue.subscribe build_subscription_options, &method(:process)
-      end
-
-      def build_subscription_options
-        {
-          block:      false,
-          manual_ack: true,
-          exclusive:  false
-        }
+        builds_subscriber.subscribe(&method(:process))
       end
 
       def unsubscribe_builds
-        build_subscription.cancel
-        build_channel.close
+        builds_subscriber.unsubscribe
+      end
+
+      def builds_subscriber
+        @builds_subscriber ||= Broker::Subscriber.new broker_connection, build_queue_name
       end
 
       def process(delivery_info, _metadata, payload)
@@ -55,9 +46,9 @@ module Pug
         executor.perform
 
         if executor.success?
-          build_channel.acknowledge delivery_info.delivery_tag, false
+          builds_subscriber.acknowledge delivery_info.delivery_tag, false
         else
-          build_channel.reject delivery_info.delivery_tag, false
+          builds_subscriber.reject delivery_info.delivery_tag, false
         end
       end
     end
