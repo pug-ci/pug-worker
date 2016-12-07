@@ -18,11 +18,13 @@ module Pug
       end
 
       def start
+        broker_connection.start
         pool.start
       end
 
       def stop
         pool.stop
+        broker_connection.close
       end
 
       private
@@ -36,7 +38,7 @@ module Pug
       end
 
       def broker_connection
-        @broker_connection ||= Bunny.new(broker_uri).start
+        @broker_connection ||= Bunny.new broker_uri
       end
     end
   end
