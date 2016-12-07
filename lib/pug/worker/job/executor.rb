@@ -9,12 +9,20 @@ module Pug
         end
 
         def perform
-          sleep 2
+          vm.run do |_container|
+            sleep 2
+          end
+
           @success = true
         end
 
         def success?
           @success
+        end
+
+        def vm
+          # TODO: get image tag from payload
+          VM.for 'polleverywhere/rbenv'
         end
       end
     end
