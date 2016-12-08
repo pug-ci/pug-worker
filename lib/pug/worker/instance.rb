@@ -36,13 +36,9 @@ module Pug
         builds_subscriber.unsubscribe
       end
 
-      def builds_subscriber
-        @builds_subscriber ||= Broker::Subscriber.new broker_connection, build_queue_name
-      end
-
       def process(delivery_info, _metadata, payload)
         p "Instance worker ##{number} received message: #{payload}"
-        executor = Job::Executor.new payload
+        executor = Job::Executor.new parse_payload(payload)
         executor.perform
 
         if executor.success?
@@ -50,6 +46,14 @@ module Pug
         else
           builds_subscriber.reject delivery_info.delivery_tag, false
         end
+      end
+
+      def parse_payload(payload)
+        JSON.parse payload, symbolize_names: true
+      end
+
+      def builds_subscriber
+        @builds_subscriber ||= Broker::Subscriber.new broker_connection, build_queue_name
       end
     end
   end
