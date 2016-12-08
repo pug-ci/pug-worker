@@ -42,7 +42,10 @@ module Pug
         end
 
         def container_options
-          { 'Image' => image.id }
+          {
+            'Cmd' => ['/sbin/init'],
+            'Image' => image.id
+          }
         end
       end
     end
