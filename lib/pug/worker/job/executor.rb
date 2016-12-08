@@ -22,7 +22,7 @@ module Pug
 
         def vm
           # TODO: get image tag from payload
-          VM.for 'polleverywhere/rbenv'
+          VM.for 'polleverywhere/rbenv:latest'
         end
       end
     end
