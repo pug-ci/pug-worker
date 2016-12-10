@@ -9,9 +9,8 @@ module Pug
           @exchange_name = exchange_name
         end
 
-        def publish(event, message)
-          options = { properties: { type: event } }
-          exchange.publish message, options
+        def publish(message)
+          exchange.publish message.to_json
         end
 
         private
