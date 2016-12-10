@@ -36,20 +36,11 @@ module Pug
         builds_subscriber.unsubscribe
       end
 
-      def process(delivery_info, _metadata, payload)
-        p "Instance worker ##{number} received message: #{payload}"
-        executor = Job::Executor.new parse_payload(payload), builds_status_reporter
+      def process(message)
+        executor = Job::Executor.new message.payload, builds_status_reporter
         executor.perform
 
-        if executor.success?
-          builds_subscriber.acknowledge delivery_info.delivery_tag, false
-        else
-          builds_subscriber.reject delivery_info.delivery_tag, false
-        end
-      end
-
-      def parse_payload(payload)
-        JSON.parse payload, symbolize_names: true
+        executor.success? ? message.ack : message.reject
       end
 
       def builds_subscriber

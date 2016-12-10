@@ -14,20 +14,20 @@ module Pug
         end
 
         def subscribe(&block)
-          make_subscription(&block)
+          @subscription = make_subscription(&block)
         end
 
         def unsubscribe
-          subscription.cancel
+          @subscription.cancel
           channel.close
         end
 
         private
 
-        attr_reader :subscription
-
-        def make_subscription(&block)
-          @subscription ||= queue.subscribe subscription_options, &block
+        def make_subscription
+          queue.subscribe subscription_options do |delivery_info, _metadata, payload|
+            yield Message.new(channel, delivery_info, payload)
+          end
         end
 
         def subscription_options
