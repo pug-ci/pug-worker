@@ -8,7 +8,7 @@ module Pug
 
       attr_reader :number, :broker_connection, :configuration
 
-      delegate build_queue_name: :configuration
+      def_delegators :configuration, :build_queue_name, :build_status_exchange_name
 
       def initialize(number, broker_connection, configuration)
         @number = number
@@ -38,7 +38,7 @@ module Pug
 
       def process(delivery_info, _metadata, payload)
         p "Instance worker ##{number} received message: #{payload}"
-        executor = Job::Executor.new parse_payload(payload)
+        executor = Job::Executor.new parse_payload(payload), builds_status_reporter
         executor.perform
 
         if executor.success?
@@ -54,6 +54,10 @@ module Pug
 
       def builds_subscriber
         @builds_subscriber ||= Broker::Subscriber.new broker_connection, build_queue_name
+      end
+
+      def builds_status_reporter
+        @builds_status_reporter ||= Broker::Reporter.new broker_connection, build_status_exchange_name
       end
     end
   end

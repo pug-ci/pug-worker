@@ -2,19 +2,24 @@ module Pug
   module Worker
     module Job
       class Executor
-        attr_reader :payload
+        attr_reader :payload, :reporter
 
-        def initialize(payload)
+        def initialize(payload, reporter)
           @payload = payload
+          @reporter = reporter
         end
 
         def perform
+          reporter.publish 'build:started', 'build started'
+
           vm.run do |container|
             container.store_file '~/build.sh', build_script
 
             container.exec ['chmod', '+x', '~/build.sh']
             p container.exec ['bash', '~/build.sh']
           end
+
+          reporter.publish 'build:finished', 'build finished'
 
           @success = true
         end
