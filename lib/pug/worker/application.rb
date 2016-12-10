@@ -7,7 +7,7 @@ module Pug
 
       attr_reader :configuration
 
-      delegate %i(broker_uri pool_size) => :configuration
+      def_delegators :configuration, :broker_uri, :pool_size
 
       def initialize(options = {})
         @configuration = Configuration.new options

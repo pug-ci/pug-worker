@@ -6,7 +6,7 @@ module Pug
 
         attr_reader :queue_name
 
-        delegate %i(acknowledge reject) => :channel
+        def_delegators :channel, :acknowledge, :reject
 
         def initialize(connection, queue_name)
           super connection
