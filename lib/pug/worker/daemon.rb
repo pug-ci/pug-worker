@@ -1,11 +1,10 @@
 module Pug
   module Worker
     class Daemon
-      attr_reader :application, :options
+      attr_reader :application
 
-      def initialize(application, options)
+      def initialize(application)
         @application = application
-        @options = options
       end
 
       def run
@@ -26,10 +25,6 @@ module Pug
       def stop
         delete_pid_file
         application.stop
-      end
-
-      def daemonize?
-        options[:daemonize]
       end
 
       def daemonize
@@ -64,11 +59,23 @@ module Pug
       end
 
       def pid_file
-        @pid_file ||= PidFile.new options[:pid_file]
+        @pid_file ||= PidFile.new pid_path
       end
 
       def pid
         Process.pid
+      end
+
+      def daemonize?
+        configuration.daemonize?
+      end
+
+      def pid_path
+        configuration.pid_path
+      end
+
+      def configuration
+        Pug::Worker.configuration
       end
     end
   end

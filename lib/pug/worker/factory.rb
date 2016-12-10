@@ -1,15 +1,14 @@
 module Pug
   module Worker
     class Factory
-      attr_reader :broker_connection, :configuration
+      attr_reader :broker_connection
 
-      def initialize(broker_connection, configuration)
+      def initialize(broker_connection)
         @broker_connection = broker_connection
-        @configuration = configuration
       end
 
       def create(instance_num)
-        Instance.new instance_num, broker_connection, configuration
+        Instance.new instance_num, broker_connection
       end
     end
   end

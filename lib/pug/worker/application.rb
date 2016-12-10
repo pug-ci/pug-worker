@@ -3,20 +3,6 @@ require 'bunny'
 module Pug
   module Worker
     class Application
-      extend Forwardable
-
-      attr_reader :configuration
-
-      def_delegators :configuration, :broker_uri, :pool_size
-
-      def initialize(options = {})
-        @configuration = Configuration.new options
-      end
-
-      def configure
-        yield configuration
-      end
-
       def start
         broker_connection.start
         pool.start
@@ -34,11 +20,23 @@ module Pug
       end
 
       def instance_factory
-        @instance_factory ||= Factory.new broker_connection, configuration
+        @instance_factory ||= Factory.new broker_connection
       end
 
       def broker_connection
         @broker_connection ||= Bunny.new broker_uri
+      end
+
+      def pool_size
+        configuration.pool_size
+      end
+
+      def broker_uri
+        configuration.broker_uri
+      end
+
+      def configuration
+        Pug::Worker.configuration
       end
     end
   end

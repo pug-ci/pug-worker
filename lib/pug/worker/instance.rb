@@ -3,17 +3,13 @@ require 'celluloid/current'
 module Pug
   module Worker
     class Instance
-      extend  Forwardable
       include Celluloid
 
-      attr_reader :number, :broker_connection, :configuration
+      attr_reader :number, :broker_connection
 
-      def_delegators :configuration, :build_queue_name, :build_status_exchange_name
-
-      def initialize(number, broker_connection, configuration)
+      def initialize(number, broker_connection)
         @number = number
         @broker_connection = broker_connection
-        @configuration = configuration
       end
 
       def start
@@ -44,11 +40,23 @@ module Pug
       end
 
       def builds_subscriber
-        @builds_subscriber ||= Broker::Subscriber.new broker_connection, build_queue_name
+        @builds_subscriber ||= Broker::Subscriber.new broker_connection, builds_broker[:queue_name]
       end
 
       def builds_status_reporter
-        @builds_status_reporter ||= Broker::Reporter.new broker_connection, build_status_exchange_name
+        @builds_status_reporter ||= Broker::Reporter.new broker_connection, builds_status_broker[:exchange_name]
+      end
+
+      def builds_broker
+        configuration.builds_broker
+      end
+
+      def builds_status_broker
+        configuration.builds_status_broker
+      end
+
+      def configuration
+        Pug::Worker.configuration
       end
     end
   end

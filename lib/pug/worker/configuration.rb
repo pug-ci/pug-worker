@@ -1,14 +1,29 @@
 module Pug
   module Worker
     class Configuration
-      attr_reader :pool_size, :broker_uri, :build_queue_name, :build_status_exchange_name
+      DEFAULTS = {
+        daemonize:            false,
+        pool_size:            3,
+        broker_uri:           'amqp://guest:guest@localhost:5672',
+        builds_broker:        { queue_name: 'pug.builds' },
+        builds_status_broker: { exchange_name: 'pug.builds.status' }
+      }.freeze
+
+      attr_accessor :pid_path, :daemonize, :pool_size, :broker_uri,
+                    :builds_broker, :builds_status_broker
+
+      alias_method :daemonize?, :daemonize
 
       def initialize(options = {})
-        @pool_size        = options[:pool_size] || 3
-        @broker_uri       = options[:broker_uri] || 'amqp://guest:guest@localhost:5672'
+        apply DEFAULTS.merge(options)
+      end
 
-        @build_queue_name           = options[:build_queue_name] || 'pug.builds'
-        @build_status_exchange_name = options[:build_status_exchange_name] || 'pug.builds.status'
+      private
+
+      def apply(options)
+        options.each_pair do |option, value|
+          send "#{option}=", value
+        end
       end
     end
   end

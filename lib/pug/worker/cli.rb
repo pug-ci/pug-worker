@@ -5,29 +5,23 @@ module Pug
     class CLI < Thor
       desc 'start', 'Starts worker application'
 
-      method_option :pool_size, type: :numeric, default: 3
-      method_option :pid_file,  type: :string
+      method_option :pool_size, type: :numeric
+      method_option :pid_path,  type: :string
+      method_option :daemonize, type: :boolean
 
       def start
-        daemon.run
+        configure
+        run
       end
 
       private
 
-      def daemon
-        Daemon.new application, daemon_options
+      def configure
+        Pug::Worker.configuration = Configuration.new method_options
       end
 
-      def application
-        Application.new application_options
-      end
-
-      def application_options
-        Utils.slice method_options, :pool_size
-      end
-
-      def daemon_options
-        Utils.slice method_options, :pid_file
+      def run
+        Daemon.new(Application.new).run
       end
 
       def method_options
