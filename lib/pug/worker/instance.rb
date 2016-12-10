@@ -33,10 +33,8 @@ module Pug
       end
 
       def process(message)
-        executor = Job::Executor.new message.payload, builds_status_reporter
-        executor.perform
-
-        executor.success? ? message.ack : message.reject
+        Job::Executor.new(message.payload, builds_status_reporter).perform
+        message.ack
       end
 
       def builds_subscriber

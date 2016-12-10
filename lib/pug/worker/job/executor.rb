@@ -20,12 +20,6 @@ module Pug
           end
 
           reporter.publish 'build:finished', 'build finished'
-
-          @success = true
-        end
-
-        def success?
-          @success
         end
 
         private
