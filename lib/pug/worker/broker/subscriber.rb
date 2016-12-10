@@ -1,31 +1,33 @@
 module Pug
   module Worker
     module Broker
-      class Subscriber
+      class Subscriber < Base
         extend Forwardable
 
-        attr_reader :connection, :queue_name
+        attr_reader :queue_name
 
         delegate %i(acknowledge reject) => :channel
 
         def initialize(connection, queue_name)
-          @connection = connection
+          super connection
           @queue_name = queue_name
         end
 
         def subscribe(&block)
-          @subscription = make_subscription(&block)
+          make_subscription(&block)
         end
 
         def unsubscribe
-          @subscription.cancel
+          subscription.cancel
           channel.close
         end
 
         private
 
+        attr_reader :subscription
+
         def make_subscription(&block)
-          queue.subscribe subscription_options, &block
+          @subscription ||= queue.subscribe subscription_options, &block
         end
 
         def subscription_options
@@ -42,10 +44,6 @@ module Pug
 
         def queue_options
           { durable: true }
-        end
-
-        def channel
-          @channel ||= connection.create_channel
         end
       end
     end
