@@ -19,7 +19,6 @@ module Pug
         trap_signals
         create_pid_file
         application.start
-        sleep
       end
 
       def stop
