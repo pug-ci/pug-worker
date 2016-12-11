@@ -32,11 +32,6 @@ module Pug
         builds_subscriber.unsubscribe
       end
 
-      def process(message)
-        Job::Executor.new(message.payload, builds_status_reporter).perform
-        message.ack
-      end
-
       def builds_subscriber
         @builds_subscriber ||= Broker::Subscriber.new(
           broker_connection,
@@ -44,11 +39,23 @@ module Pug
         )
       end
 
-      def builds_status_reporter
-        @builds_status_reporter ||= Broker::Reporter.new(
+      def status_reporter
+        @status_reporter ||= Broker::Reporter.new(
           broker_connection,
           configuration.builds_broker.status_exchange
         )
+      end
+
+      def logs_reporter
+        @logs_reporter ||= Broker::Reporter.new(
+          broker_connection,
+          configuration.builds_broker.logs_exchange
+        )
+      end
+
+      def process(message)
+        Job::Executor.new(message.payload, status_reporter, logs_reporter).perform
+        message.ack
       end
 
       def configuration

@@ -2,11 +2,12 @@ module Pug
   module Worker
     module Job
       class Executor
-        attr_reader :payload, :status_reporter
+        attr_reader :payload, :status_reporter, :logs_reporter
 
-        def initialize(payload, status_reporter)
+        def initialize(payload, status_reporter, logs_reporter)
           @payload = payload
           @status_reporter = status_reporter
+          @logs_reporter = logs_reporter
         end
 
         def perform
