@@ -38,27 +38,17 @@ module Pug
       end
 
       def builds_subscriber
-        @builds_subscriber ||= initialize_builds_subscriber
-      end
-
-      def initialize_builds_subscriber
-        Broker::Subscriber.new broker_connection, builds_broker[:queue_name]
+        @builds_subscriber ||= Broker::Subscriber.new(
+          broker_connection,
+          configuration.builds_broker.queue_name
+        )
       end
 
       def builds_status_reporter
-        @builds_status_reporter ||= initialize_builds_status_reporter
-      end
-
-      def initialize_builds_status_reporter
-        Broker::Reporter.new broker_connection, builds_status_broker[:exchange_name]
-      end
-
-      def builds_broker
-        configuration.builds_broker
-      end
-
-      def builds_status_broker
-        configuration.builds_status_broker
+        @builds_status_reporter ||= Broker::Reporter.new(
+          broker_connection,
+          configuration.builds_broker.status_exchange
+        )
       end
 
       def configuration

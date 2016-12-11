@@ -18,14 +18,14 @@ module Pug
   module Worker
     class << self
       attr_writer :configuration
+    end
 
-      def configuration
-        @configuration ||= Configuration.new
-      end
+    def self.configuration
+      @configuration ||= Configuration.new
+    end
 
-      def configure
-        yield configuration
-      end
+    def self.configure
+      yield configuration
     end
   end
 end

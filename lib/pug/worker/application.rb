@@ -16,7 +16,7 @@ module Pug
       private
 
       def pool
-        @pool ||= Pool.new pool_size, instance_factory
+        @pool ||= Pool.new configuration.pool_size, instance_factory
       end
 
       def instance_factory
@@ -24,15 +24,7 @@ module Pug
       end
 
       def broker_connection
-        @broker_connection ||= Bunny.new broker_uri
-      end
-
-      def pool_size
-        configuration.pool_size
-      end
-
-      def broker_uri
-        configuration.broker_uri
+        @broker_connection ||= Bunny.new configuration.amqp
       end
 
       def configuration
