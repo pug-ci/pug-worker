@@ -2,10 +2,10 @@ module Pug
   module Worker
     module Job
       class Executor
-        attr_reader :payload, :status_reporter, :logs_reporter
+        attr_reader :build, :status_reporter, :logs_reporter
 
         def initialize(payload, status_reporter, logs_reporter)
-          @payload = payload
+          @build = Build.new payload
           @status_reporter = status_reporter
           @logs_reporter = logs_reporter
         end
@@ -39,7 +39,7 @@ module Pug
         end
 
         def build_identity
-          { id: payload[:id] }
+          { id: build.id }
         end
 
         def build_status_for(status)
@@ -57,7 +57,7 @@ module Pug
         end
 
         def build_script
-          payload[:build_script]
+          build.script
         end
       end
     end
