@@ -5,6 +5,7 @@ gem 'celluloid', '~> 0.17'
 gem 'bunny', '~> 2.6'
 gem 'docker-api', '~> 1.33'
 gem 'thor', '~> 0.19'
+gem 'hashr', '~> 1.0'
 
 group :development, :test do
   gem 'rspec', '~> 3.5'
