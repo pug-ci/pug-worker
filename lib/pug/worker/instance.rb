@@ -40,14 +40,14 @@ module Pug
       end
 
       def status_reporter
-        @status_reporter ||= Broker::Reporter.new(
+        @status_reporter ||= Broker::Publisher.new(
           broker_connection,
           configuration.builds_broker.status_exchange
         )
       end
 
       def logs_reporter
-        @logs_reporter ||= Broker::Reporter.new(
+        @logs_reporter ||= Broker::Publisher.new(
           broker_connection,
           configuration.builds_broker.logs_exchange
         )

@@ -1,7 +1,7 @@
 module Pug
   module Worker
     module Broker
-      class Reporter < Base
+      class Publisher < Base
         attr_reader :exchange_name
 
         def initialize(connection, exchange_name)
