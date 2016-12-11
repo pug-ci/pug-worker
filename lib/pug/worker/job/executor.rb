@@ -52,8 +52,7 @@ module Pug
         end
 
         def vm
-          # TODO: get image tag from payload
-          VM.for 'polleverywhere/rbenv:latest'
+          VM.for build.language
         end
 
         def build_script

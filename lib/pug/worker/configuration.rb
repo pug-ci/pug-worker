@@ -14,6 +14,11 @@ module Pug
               builds_broker: {
                 queue_name: 'pug.builds',
                 status_exchange: 'pug.builds.status'
+              },
+              vm: {
+                image_lookup: {
+                  ruby: 'polleverywhere/rbenv:latest'
+                }
               }
     end
   end

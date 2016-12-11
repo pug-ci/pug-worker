@@ -7,7 +7,8 @@ module Pug
   module Worker
     module VM
       def self.for(language)
-        Runner.new Image.for(language)
+        image_tag = Pug::Worker.configuration.vm.image_lookup[language]
+        Runner.new Image.for(image_tag)
       end
     end
   end
