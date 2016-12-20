@@ -1,6 +1,6 @@
 require 'docker'
 
-require 'pug/worker/vm/image'
+require 'pug/worker/vm/image_fetcher'
 require 'pug/worker/vm/runner'
 
 module Pug
@@ -8,7 +8,8 @@ module Pug
     module VM
       def self.for(language)
         image_tag = Pug::Worker.configuration.vm.image_lookup[language]
-        Runner.new Image.for(image_tag)
+        image = ImageFetcher.new(image_tag).fetch
+        Runner.new image
       end
     end
   end
