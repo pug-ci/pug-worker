@@ -10,6 +10,10 @@ module Pug
       def slice(hash, *keys)
         Hash[[keys, hash.values_at(*keys)].transpose]
       end
+
+      def slugify(str)
+        str.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+      end
     end
   end
 end

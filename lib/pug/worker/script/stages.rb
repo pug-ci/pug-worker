@@ -1,4 +1,5 @@
 require 'pug/worker/script/stages/base'
+require 'pug/worker/script/stages/clone'
 
 module Pug
   module Worker

@@ -15,8 +15,28 @@ module Pug
         payload[:build_script]
       end
 
+      def ref
+        payload[:ref]
+      end
+
+      def commit
+        payload[:commit_id]
+      end
+
       def language
         configuration[:language]
+      end
+
+      def repository_url
+        repository[:url]
+      end
+
+      def slug
+        Utils.slugify repository[:name]
+      end
+
+      def repository
+        payload[:repository]
       end
 
       def configuration
