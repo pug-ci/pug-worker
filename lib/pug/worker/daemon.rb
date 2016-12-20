@@ -15,14 +15,14 @@ module Pug
       private
 
       def start
-        daemonize if configuration.daemonize?
+        daemonize if daemonize?
         trap_signals
-        create_pid_file
+        create_pid_file if pid_path
         application.start
       end
 
       def stop
-        delete_pid_file
+        delete_pid_file if pid_path
         application.stop
       end
 
@@ -58,11 +58,19 @@ module Pug
       end
 
       def pid_file
-        @pid_file ||= PidFile.new configuration.pid_path
+        @pid_file ||= PidFile.new pid_path
       end
 
       def pid
         Process.pid
+      end
+
+      def pid_path
+        configuration.pid_path
+      end
+
+      def daemonize?
+        configuration.daemonize?
       end
 
       def configuration
