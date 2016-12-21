@@ -13,7 +13,11 @@ module Pug
             private
 
             def setup_ruby_version
-              shell.cmd "rbenv shell #{ruby_version}"
+              shell.cmd "rvm use #{ruby_version} #{rvm_options}"
+            end
+
+            def rvm_options
+              %w(--install --binary).join ' '
             end
 
             def bundle_dependencies

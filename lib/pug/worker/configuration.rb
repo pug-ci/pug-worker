@@ -17,7 +17,8 @@ module Pug
               },
               vm: {
                 image_lookup: {
-                  ruby: 'polleverywhere/rbenv:latest'
+                  # ruby: 'polleverywhere/rbenv:latest'
+                  ruby: 'adgud2/ruby-rvm:latest'
                 }
               }
     end
