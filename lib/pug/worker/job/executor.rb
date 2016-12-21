@@ -19,6 +19,7 @@ module Pug
             container.exec ['chmod', '+x', '~/build.sh']
 
             result = container.exec ['bash', '~/build.sh']
+            p result
           end
 
           report_build_result result
@@ -56,7 +57,7 @@ module Pug
         end
 
         def build_script
-          build.script
+          build.script || Script::Generator.new(build).generate
         end
       end
     end
