@@ -9,11 +9,15 @@ module Pug
         end
 
         def generate
-          # TODO: run all stages
+          apply_stages
           shell.compile
         end
 
         private
+
+        def apply_stages
+          Stages::Main.new(shell, build).apply
+        end
 
         def shell
           @shell ||= Shell::Builder.new
