@@ -43,7 +43,7 @@ module Pug
 
         def container_options
           {
-            'Cmd' => ['/sbin/init'],
+            'Tty' => true,  # TODO: this should be treated only as temporary solution
             'Image' => image.id
           }
         end
