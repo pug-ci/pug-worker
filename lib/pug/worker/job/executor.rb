@@ -18,8 +18,9 @@ module Pug
             container.store_file '~/build.sh', build_script
             container.exec ['chmod', '+x', '~/build.sh']
 
-            result = container.exec ['bash', '~/build.sh']
-            p result
+            result = container.exec(['/bin/bash', '-l', '~/build.sh']) do |stream, chunk|
+              p "#{stream}: #{chunk}"
+            end
           end
 
           report_build_result result
