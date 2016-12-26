@@ -8,6 +8,7 @@ gem 'bunny', '~> 2.6'
 gem 'docker-api', '~> 1.33'
 gem 'thor', '~> 0.19'
 gem 'hashr', '~> 1.0'
+gem 'foreman', '~> 0.8'
 
 group :development, :test do
   gem 'rspec', '~> 3.5'
