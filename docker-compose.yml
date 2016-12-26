@@ -1,0 +1,10 @@
+version: '2'
+services:
+  worker:
+    build: .
+    environment:
+      - PUG_WORKER_AMQP_HOST
+    links:
+      - docker
+  docker:
+    image: docker:1.12.5
