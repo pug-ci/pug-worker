@@ -12,7 +12,7 @@ module Pug
       end
 
       def slugify(str)
-        str.downcase.strip.gsub(' ', '-').gsub(/[^\w-]/, '')
+        str.downcase.strip.tr(' ', '-').gsub(/[^\w-]/, '')
       end
     end
   end

@@ -43,7 +43,7 @@ module Pug
 
         def container_options
           {
-            'Tty' => true,  # TODO: this should be treated only as temporary solution
+            'Tty' => true, # TODO: this should be treated only as temporary solution
             'Image' => image.id
           }
         end
