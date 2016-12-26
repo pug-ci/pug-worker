@@ -3,6 +3,10 @@ require 'hashr'
 module Pug
   module Worker
     class Configuration < Hashr
+      extend Hashr::EnvDefaults
+
+      self.env_namespace = 'pug_worker'.freeze
+
       define  daemonize: false,
               pool_size: 3,
               amqp: {
