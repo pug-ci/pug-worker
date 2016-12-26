@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.3.3'
+
 gem 'rake'
 gem 'celluloid', '~> 0.17'
 gem 'bunny', '~> 2.6'
