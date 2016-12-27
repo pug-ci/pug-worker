@@ -6,7 +6,7 @@ require 'pug/worker/version'
 Gem::Specification.new do |spec|
   spec.name          = 'pug-worker'
   spec.version       = Pug::Worker::VERSION
-  spec.authors       = 'Pug CI team'
+  spec.authors       = 'Pug CI Team'
 
   spec.summary       = 'Pug building apps'
   spec.description   = 'Pug building apps'
