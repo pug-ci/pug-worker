@@ -23,10 +23,6 @@ module Pug
         payload[:commit_id]
       end
 
-      def language
-        configuration[:language]
-      end
-
       def repository_url
         repository[:url]
       end
@@ -37,6 +33,10 @@ module Pug
 
       def repository
         payload[:repository]
+      end
+
+      def language
+        configuration[:language]
       end
 
       def configuration

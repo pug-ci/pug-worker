@@ -25,7 +25,7 @@ module Pug
 
           Timeout.timeout 10 do
             loop do
-              break if container.json['State']['Running']
+              break if running?
               sleep 1
             end
           end
@@ -35,6 +35,10 @@ module Pug
           p 'Stopping VM'
           container.stop
           container.delete force: true
+        end
+
+        def running?
+          container && container.json['State']['Running']
         end
 
         def container

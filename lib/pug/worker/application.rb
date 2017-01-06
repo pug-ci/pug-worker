@@ -16,14 +16,6 @@ module Pug
 
       private
 
-      def pool
-        @pool ||= Pool.new configuration.pool_size, instance_factory
-      end
-
-      def instance_factory
-        @instance_factory ||= Factory.new broker_connection
-      end
-
       def start_broker_connection
         Timeout.timeout 10 do
           begin
@@ -37,6 +29,14 @@ module Pug
 
       def broker_connection
         @broker_connection ||= Bunny.new configuration.amqp
+      end
+
+      def pool
+        @pool ||= Pool.new configuration.pool_size, instance_factory
+      end
+
+      def instance_factory
+        @instance_factory ||= Factory.new broker_connection
       end
 
       def configuration

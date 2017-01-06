@@ -25,12 +25,10 @@ module Pug
       private
 
       def subscribe_builds
-        p "Subscribing"
         builds_subscriber.subscribe(&method(:process))
       end
 
       def unsubscribe_builds
-        p "Unsubscribing"
         builds_subscriber.unsubscribe
       end
 
@@ -56,7 +54,7 @@ module Pug
       end
 
       def process(message)
-        p "Starting request processing"
+        p 'Processing request'
         Job::Executor.new(message.payload, status_reporter, logs_reporter).perform
         message.ack
       end
