@@ -24,7 +24,8 @@ module Pug
                   # ruby: 'polleverywhere/rbenv:latest'
                   ruby: 'adgud2/ruby-rvm:latest'
                 }
-              }
+              },
+              build_timeout: 300
     end
   end
 end

@@ -16,7 +16,7 @@ module Pug
               container.store_file '~/build.sh', script
               container.exec ['chmod', '+x', '~/build.sh']
 
-              result = container.exec(['/bin/bash', '-l', '~/build.sh']) do |stream, chunk|
+              result = container.exec(['/bin/bash', '-l', '~/build.sh'], wait: timeout) do |stream, chunk|
                 p "#{stream}: #{chunk}"
               end
             end
@@ -36,6 +36,10 @@ module Pug
 
           def generate_script
             Script::Generator.new(build).generate
+          end
+
+          def timeout
+            Pug::Worker.configuration.build_timeout
           end
         end
       end
