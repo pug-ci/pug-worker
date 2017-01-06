@@ -2,9 +2,13 @@ version: '2'
 services:
   worker:
     build: .
-    environment:
-      - PUG_WORKER_AMQP_HOST
+    env_file: .env
     links:
-      - docker
-  docker:
-    image: docker:1.12.5
+      - rabbitmq
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  rabbitmq:
+    image: rabbitmq:3.6.4-management
+    hostname: rabbitmq
+    ports:
+      - "15672:15672"
