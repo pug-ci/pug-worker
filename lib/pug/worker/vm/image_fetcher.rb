@@ -16,7 +16,8 @@ module Pug
 
         def find_image
           Docker::Image.all.find do |image|
-            image.info['RepoTags'].include? tag
+            image_info = image.info['RepoTags']
+            image_info && image_info.include?(tag)
           end
         end
 
