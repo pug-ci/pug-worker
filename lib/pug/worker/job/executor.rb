@@ -11,54 +11,31 @@ module Pug
         end
 
         def perform
-          report_build_start
-          result = nil
-
-          vm.run do |container|
-            container.store_file '~/build.sh', build_script
-            container.exec ['chmod', '+x', '~/build.sh']
-
-            result = container.exec(['/bin/bash', '-l', '~/build.sh']) do |stream, chunk|
-              p "#{stream}: #{chunk}"
-            end
-          end
-
-          report_build_result result
+          report_start
+          result = perform_build
+          report_result result
         end
 
         private
 
-        def report_build_start
-          report_build_status :started
+        def perform_build
+          Builds::Runner.new(build).run
         end
 
-        def report_build_result(result)
-          report_build_status build_status_for(result.last)
+        def report_start
+          report_status :started
         end
 
-        def report_build_status(status)
-          status_reporter.publish build_identity.merge!(status: status)
+        def report_result(result)
+          report_status resolve_status(result)
         end
 
-        def build_identity
-          { id: build.id }
+        def resolve_status(result)
+          Builds::StatusResolver.new(result).resolve
         end
 
-        def build_status_for(status)
-          case status
-          when 0
-            :passed
-          else
-            :failed
-          end
-        end
-
-        def vm
-          VM.for build.language
-        end
-
-        def build_script
-          build.script || Script::Generator.new(build).generate
+        def report_status(status)
+          status_reporter.publish id: build.id, status: status
         end
       end
     end

@@ -1,3 +1,4 @@
+require 'pug/worker/job/builds'
 require 'pug/worker/job/executor'
 
 module Pug
