@@ -23,7 +23,7 @@ module Pug
         end
 
         def report_start
-          report_status :started
+          report_status :running
         end
 
         def report_result(result)
