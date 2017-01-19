@@ -55,7 +55,7 @@ module Pug
 
       def process(message)
         p 'Processing request'
-        Job::Executor.new(message.payload, status_reporter, logs_reporter).perform
+        Job::Executor.new(message.payload, status_reporter, logs_reporter).run
         message.ack
       end
 

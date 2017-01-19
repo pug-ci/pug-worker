@@ -10,16 +10,16 @@ module Pug
           @logs_reporter = logs_reporter
         end
 
-        def perform
+        def run
           report_start
-          result = perform_build
+          result = run_build
           report_result result
         end
 
         private
 
-        def perform_build
-          Builds::Runner.new(build).run
+        def run_build
+          BuildRunner.new(build).run
         end
 
         def report_start
@@ -31,7 +31,7 @@ module Pug
         end
 
         def resolve_status(result)
-          Builds::StatusResolver.new(result).resolve
+          StatusResolver.new(result).resolve
         end
 
         def report_status(status)
