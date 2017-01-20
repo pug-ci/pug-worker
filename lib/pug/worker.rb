@@ -1,6 +1,7 @@
 require 'forwardable'
 
 require 'pug/worker/version'
+require 'pug/worker/logging'
 require 'pug/worker/utils'
 require 'pug/worker/configuration'
 require 'pug/worker/pid_file'
@@ -19,7 +20,7 @@ require 'pug/worker/cli'
 module Pug
   module Worker
     class << self
-      attr_writer :configuration
+      attr_writer :configuration, :logger
     end
 
     def self.configuration
@@ -28,6 +29,10 @@ module Pug
 
     def self.configure
       yield configuration
+    end
+
+    def self.logger
+      @logger ||= Logger.new STDOUT
     end
   end
 end
