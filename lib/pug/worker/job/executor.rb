@@ -2,6 +2,8 @@ module Pug
   module Worker
     module Job
       class Executor
+        include Logging::Methods
+
         attr_reader :build, :status_reporter, :logs_reporter
 
         def initialize(payload, status_reporter, logs_reporter)
@@ -23,19 +25,26 @@ module Pug
         end
 
         def report_start
-          report_status :running
+          report status: :running
         end
 
         def report_result(result)
-          report_status resolve_status(result)
+          status = resolve_status result
+          report status: status, duration: result.duration
         end
 
         def resolve_status(result)
           StatusResolver.new(result).resolve
         end
 
-        def report_status(status)
-          status_reporter.publish id: build.id, status: status
+        def report(params)
+          report_data = build_identity.merge! params
+          info :build_execution, report_data
+          status_reporter.publish report_data
+        end
+
+        def build_identity
+          { id: build.id }
         end
       end
     end

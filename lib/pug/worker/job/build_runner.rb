@@ -10,8 +10,11 @@ module Pug
 
         def run
           vm.run do |container|
+            start_time = Time.now
             output = ScriptExecutor.new(container, script).run
-            Result.new output
+            duration = Time.now - start_time
+
+            Result.new output, duration: duration
           end
         end
 
