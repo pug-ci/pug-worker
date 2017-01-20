@@ -22,9 +22,7 @@ module Pug
         end
 
         def exec_script
-          container.exec(['/bin/bash', '-l', '~/build.sh'], wait: timeout) do |stream, chunk|
-            p "#{stream}: #{chunk}"
-          end
+          container.exec ['/bin/bash', '-l', '~/build.sh'], wait: timeout
         end
 
         def timeout
