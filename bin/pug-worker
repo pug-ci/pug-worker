@@ -4,4 +4,6 @@ $LOAD_PATH.unshift(File.dirname(File.realpath(__FILE__)) + '/../lib')
 
 require 'pug/worker'
 
+$stdout.sync
+
 Pug::Worker::CLI.start
