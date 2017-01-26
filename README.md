@@ -1,7 +1,10 @@
+[travis]: https://travis-ci.org/pug-ci/pug-worker
+[codeclimate]: https://codeclimate.com/github/pug-ci/pug-worker
+
 # Pug::Worker
 
-[![Build Status](https://travis-ci.org/pug-ci/pug-worker.svg?branch=master)](https://travis-ci.org/pug-ci/pug-worker)
-
+[![Build Status](https://travis-ci.org/pug-ci/pug-worker.svg?branch=master)][travis]
+[![Code Climate](https://codeclimate.com/github/pug-ci/pug-worker/badges/gpa.svg)][codeclimate]
 
 Spawns pool of worker instances responsible for processing builds securely inside Docker containers.
 
