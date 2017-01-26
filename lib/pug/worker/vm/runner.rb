@@ -20,7 +20,6 @@ module Pug
         private
 
         def start
-          p "Running VM with image: #{image.id}"
           container.start
 
           Timeout.timeout 10 do
@@ -32,7 +31,6 @@ module Pug
         end
 
         def stop
-          p 'Stopping VM'
           container.stop
           container.delete force: true
         end

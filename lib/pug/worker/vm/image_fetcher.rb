@@ -2,6 +2,8 @@ module Pug
   module Worker
     module VM
       class ImageFetcher
+        include Logging::Methods
+
         attr_reader :tag
 
         def initialize(tag)
@@ -22,7 +24,7 @@ module Pug
         end
 
         def pull_image
-          p "Pulling image: #{tag}"
+          info :image_fetching, tag: tag
           Docker::Image.create 'fromImage' => tag
         end
       end

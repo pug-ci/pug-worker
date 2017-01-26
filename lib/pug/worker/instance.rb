@@ -4,6 +4,7 @@ module Pug
   module Worker
     class Instance
       include Celluloid
+      include Logging::Methods
 
       attr_reader :number, :broker_connection
 
@@ -13,12 +14,12 @@ module Pug
       end
 
       def start
-        p "Starting instance worker ##{number}"
+        info :instance_state, status: :started
         subscribe_builds
       end
 
       def stop
-        p "Stopping instance worker ##{number}"
+        info :instance_state, status: :stopped
         unsubscribe_builds
       end
 
@@ -54,7 +55,6 @@ module Pug
       end
 
       def process(message)
-        p 'Processing request'
         Job::Executor.new(message.payload, status_reporter, logs_reporter).run
         message.ack
       end
