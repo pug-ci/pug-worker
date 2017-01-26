@@ -1,11 +1,11 @@
 module Pug
   module Worker
     class Pool
-      attr_reader :size, :instance_factory
+      attr_reader :size, :broker_connection
 
-      def initialize(size, instance_factory)
+      def initialize(size, broker_connection)
         @size = size
-        @instance_factory = instance_factory
+        @broker_connection = broker_connection
       end
 
       def start
@@ -27,7 +27,7 @@ module Pug
       end
 
       def spawn_instances
-        Array.new(size) { instance_factory.create }
+        Array.new(size) { Instance.new broker_connection }
       end
     end
   end

@@ -32,11 +32,7 @@ module Pug
       end
 
       def pool
-        @pool ||= Pool.new configuration.pool_size, instance_factory
-      end
-
-      def instance_factory
-        @instance_factory ||= Factory.new broker_connection
+        @pool ||= Pool.new configuration.pool_size, broker_connection
       end
 
       def configuration
