@@ -1,6 +1,6 @@
-require 'pug/worker/script/shell'
-require 'pug/worker/script/stages'
-require 'pug/worker/script/generator'
+require_relative 'script/shell'
+require_relative 'script/stages'
+require_relative 'script/generator'
 
 module Pug
   module Worker

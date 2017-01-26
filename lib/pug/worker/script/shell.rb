@@ -1,4 +1,4 @@
-require 'pug/worker/script/shell/builder'
+require_relative 'shell/builder'
 
 module Pug
   module Worker

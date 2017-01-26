@@ -1,7 +1,7 @@
 require 'docker'
 
-require 'pug/worker/vm/image_fetcher'
-require 'pug/worker/vm/runner'
+require_relative 'vm/image_fetcher'
+require_relative 'vm/runner'
 
 module Pug
   module Worker

@@ -1,7 +1,7 @@
-require 'pug/worker/broker/base'
-require 'pug/worker/broker/message'
-require 'pug/worker/broker/subscriber'
-require 'pug/worker/broker/publisher'
+require_relative 'broker/base'
+require_relative 'broker/message'
+require_relative 'broker/subscriber'
+require_relative 'broker/publisher'
 
 module Pug
   module Worker

@@ -1,8 +1,8 @@
-require 'pug/worker/job/script_executor'
-require 'pug/worker/job/build_runner'
-require 'pug/worker/job/result'
-require 'pug/worker/job/status_resolver'
-require 'pug/worker/job/executor'
+require_relative 'job/script_executor'
+require_relative 'job/build_runner'
+require_relative 'job/result'
+require_relative 'job/status_resolver'
+require_relative 'job/executor'
 
 module Pug
   module Worker

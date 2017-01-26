@@ -1,5 +1,5 @@
-require 'pug/worker/script/stages/langs/base'
-require 'pug/worker/script/stages/langs/ruby'
+require_relative 'langs/base'
+require_relative 'langs/ruby'
 
 module Pug
   module Worker

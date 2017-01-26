@@ -1,8 +1,8 @@
-require 'pug/worker/script/stages/base'
-require 'pug/worker/script/stages/langs'
-require 'pug/worker/script/stages/clone'
-require 'pug/worker/script/stages/lang'
-require 'pug/worker/script/stages/main'
+require_relative 'stages/base'
+require_relative 'stages/langs'
+require_relative 'stages/clone'
+require_relative 'stages/lang'
+require_relative 'stages/main'
 
 module Pug
   module Worker

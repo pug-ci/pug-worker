@@ -1,7 +1,7 @@
 require 'logger'
 
-require 'pug/worker/logging/json_formatter'
-require 'pug/worker/logging/methods'
+require_relative 'logging/json_formatter'
+require_relative 'logging/methods'
 
 module Pug
   module Worker
