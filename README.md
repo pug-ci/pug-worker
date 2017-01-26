@@ -2,9 +2,8 @@
 
 [![Build Status](https://travis-ci.org/pug-ci/pug-worker.svg?branch=master)](https://travis-ci.org/pug-ci/pug-worker)
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pug/worker`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
+Spawns pool of worker instances responsible for processing builds securely inside Docker containers.
 
 ## Installation
 
@@ -24,7 +23,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+TODO: Write usage instructions
+
+## Docker
+
+You can use both docker and docker-compose with this project, in order to run tests, integration tests or a sample worker pool without setting up RabbitMQ in your local development environment.
 
 ## Development
 
