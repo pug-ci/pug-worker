@@ -32,7 +32,7 @@ module Pug
     end
 
     def self.logger
-      @logger ||= Logger.new STDOUT
+      @logger ||= Logging.default_logger
     end
   end
 end
