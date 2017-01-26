@@ -1,3 +1,4 @@
+require 'securerandom'
 require 'celluloid/current'
 
 module Pug
@@ -6,24 +7,32 @@ module Pug
       include Celluloid
       include Logging::Methods
 
-      attr_reader :number, :broker_connection
+      attr_reader :id, :broker_connection
 
-      def initialize(number, broker_connection)
-        @number = number
+      def initialize(broker_connection)
+        @id = generate_id
         @broker_connection = broker_connection
       end
 
       def start
-        info :instance_state, status: :started
+        log_status :started
         subscribe_builds
       end
 
       def stop
-        info :instance_state, status: :stopped
+        log_status :stopped
         unsubscribe_builds
       end
 
       private
+
+      def generate_id
+        SecureRandom.hex 10
+      end
+
+      def log_status(status)
+        info :instance_state, status: status, id: id
+      end
 
       def subscribe_builds
         builds_subscriber.subscribe(&method(:process))

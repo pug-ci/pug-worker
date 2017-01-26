@@ -27,7 +27,7 @@ module Pug
       end
 
       def spawn_instances
-        Array.new(size) { |instance_num| instance_factory.create instance_num }
+        Array.new(size) { instance_factory.create }
       end
     end
   end

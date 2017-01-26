@@ -7,8 +7,8 @@ module Pug
         @broker_connection = broker_connection
       end
 
-      def create(instance_num)
-        Instance.new instance_num, broker_connection
+      def create
+        Instance.new broker_connection
       end
     end
   end
