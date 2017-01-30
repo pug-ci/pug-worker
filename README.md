@@ -6,7 +6,14 @@
 [![Build Status](https://travis-ci.org/pug-ci/pug-worker.svg?branch=master)][travis]
 [![Code Climate](https://codeclimate.com/github/pug-ci/pug-worker/badges/gpa.svg)][codeclimate]
 
-Spawns pool of worker instances responsible for processing builds securely inside Docker containers.
+Worker is the component of Pug CI that spawns specified number of compute instances, each of which subscribes to broker queue and handles processing of single builds stream.
+
+The process of building works as follows:
+* instance receives build request
+* generates bash script containing ordered build stages (cloning repository, installing dependencies, executing tests) based on configuration file provided in application's repository,
+* launches Docker container suitable for application's environment,
+* uploads script and executes it inside container instance,
+* publishes state changes and result to dedicated broker exchange.
 
 ## Installation
 
